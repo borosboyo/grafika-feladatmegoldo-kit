@@ -126,12 +126,16 @@ int main() {
     parsecPersec(vec3(5,2,4), vec3(3,2,1), vec3(3,2,3), vec3(3,4,2), 100);
 
     //
+    billBoard(vec3(4,2,7),vec3(1,2,3),vec3(0,1,0));
+
+    //
+    FPS(vec3(0, 0, 0), vec3(6, 8, 0), vec3(12, -9, 0));
     */
 
     vec3 tmp3;
     vec4 tmp4;
 
-    //FPS(vec3(0, 0, 0), vec3(6, 8, 0), vec3(12, -9, 0));
-    billBoard(vec3(4,2,7),vec3(1,2,3),vec3(0,1,0));
+   
+    
 
 }

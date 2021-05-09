@@ -792,14 +792,17 @@ rslt = [r(1), r(2), r(3), 0;
 //FPS jatek, FRENET
 inline void FPS(vec3 pos, vec3 seb, vec3 gyors) {
 	vec3 w, v, u;
-	w = normalize(seb * (-1.0));
-	v = normalize(gyors);
-	u = cross(normalize(v), normalize(w));
-	printf("Kamera View transz:\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 1\n",
-		u.x, v.x, w.x, 0,
-		u.y, v.y, w.y, 0,
-		u.z, v.z, w.z, 0,
-		pos.x, pos.y, pos.z, 1);
+	w = seb * (-1.0);
+	v = gyors;
+	u = cross(v, w);
+	w = normalize(w);
+	v = normalize(v);
+	u = normalize(u);
+
+	printf("%3.05f %3.05f %3.05f 0\n", u.x, v.x, w.x);
+	printf("%3.05f %3.05f %3.05f 0\n", u.y, v.y, w.y);
+	printf("%3.05f %3.05f %3.05f 0\n", u.z, v.z, w.z);
+	printf("%3.05f %3.05f %3.05f 1\n", pos.x, pos.y, pos.z);
 }
 
 //xy síkra billboard referencia
