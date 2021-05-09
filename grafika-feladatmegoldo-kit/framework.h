@@ -715,6 +715,10 @@ inline float fenysugarKozegbol(float n) {
 	return toDeg(asinf(n));
 }
 
+//
+
+
+
 
 //9. kviz
 
@@ -767,6 +771,24 @@ inline void testElek(int darab, int csucs, int lap) {
 
 
 
+//FPS jatek, FRENET
+inline void FPS(vec3 pos, vec3 seb, vec3 gyors) {
+	vec3 w, v, u;
+	w = seb * (-1.0);
+	v = gyors;
+	u = cross(v, w);
+	w = normalize(w);
+	v = normalize(v);
+	u = normalize(u);
+
+	printf("%3.05f %3.05f %3.05f 0\n", u.x, v.x, w.x);
+	printf("%3.05f %3.05f %3.05f 0\n", u.y, v.y, w.y);
+	printf("%3.05f %3.05f %3.05f 0\n", u.z, v.z, w.z);
+	printf("%3.05f %3.05f %3.05f 1\n", pos.x, pos.y, pos.z);
+}
+
+
+
 /*
 Billboard matlabban:
 
@@ -788,23 +810,6 @@ rslt = [r(1), r(2), r(3), 0;
 
 
 */
-
-//FPS jatek, FRENET
-inline void FPS(vec3 pos, vec3 seb, vec3 gyors) {
-	vec3 w, v, u;
-	w = seb * (-1.0);
-	v = gyors;
-	u = cross(v, w);
-	w = normalize(w);
-	v = normalize(v);
-	u = normalize(u);
-
-	printf("%3.05f %3.05f %3.05f 0\n", u.x, v.x, w.x);
-	printf("%3.05f %3.05f %3.05f 0\n", u.y, v.y, w.y);
-	printf("%3.05f %3.05f %3.05f 0\n", u.z, v.z, w.z);
-	printf("%3.05f %3.05f %3.05f 1\n", pos.x, pos.y, pos.z);
-}
-
 //xy síkra billboard referencia
 inline void billBoard(vec3 eye, vec3 pos, vec3 up) {
 	vec3 w = eye - pos;
@@ -815,5 +820,27 @@ inline void billBoard(vec3 eye, vec3 pos, vec3 up) {
 	printf("%3.05f %3.05f %3.05f 0\n", u.x, u.y, u.z);
 
 	printf("0 0 1 0\n");
-	printf("%3.05f %3.05f %3.05f 0\n", pos.x, pos.y, pos.z);
+	printf("%3.05f %3.05f %3.05f 1\n", pos.x, pos.y, pos.z);
+}
+
+
+//Egy játékobjektum orr iránya referencia helyzetben az Y tengely függõleges iránya pedig a Z tengely
+//az objektum pályája: r(t) = (cos(t), sin(t), t)
+//https://www.wolframalpha.com/ DERIVÁLNI
+//Pálya elsõ deriváltja a sebesség, második deriváltja a gyorsulás.
+//r’(t) = (-sin(t), cos(t), 1) = (-0.707, 0.707, 1)
+//r’’(t) = (-cost(t), -sin(t), 0) = (-0.707, -0.707, 0)
+//Itt okosan kell kerekitgetni altalaban mindig lefele, de ha rettento kozel van .4999966 akkor az 0.5
+//float miatt
+inline void jatekObjRef(vec3 seb, vec3 gyors, float tRad) {
+	vec3 sor2 = seb;
+	vec3 sor3 = gyors;
+	vec3 sor1 = normalize(cross(sor2, sor3));
+	sor2 = normalize(seb);
+	sor3 = normalize(gyors);
+	vec3 pos = vec3(cosf(tRad), sinf(tRad), tRad);
+	printf("%3.05f %3.05f %3.05f 0\n", sor1.x, sor1.y, sor1.z);
+	printf("%3.05f %3.05f %3.05f 0\n", sor2.x, sor2.y, sor2.z);
+	printf("%3.05f %3.05f %3.05f 0\n", sor3.x, sor3.y, sor3.z);
+	printf("%3.05f %3.05f %3.05f 1\n", pos.x,  pos.y,  pos.z);
 }

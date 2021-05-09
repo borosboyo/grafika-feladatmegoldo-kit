@@ -1,6 +1,6 @@
 // grafika-toolkit.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+// Használat csak saját felelõsségre!
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <cstdlib>
 #include "framework.h"
@@ -136,6 +136,6 @@ int main() {
     vec4 tmp4;
 
    
-    
+    jatekObjRef(vec3(-0.707, 0.707, 1),vec3(-0.707, -0.707, 0), M_PI / 4);
 
 }
