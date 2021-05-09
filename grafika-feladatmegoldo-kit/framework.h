@@ -290,7 +290,7 @@ inline void varos(double lat1, double long1, double lat2, double long2, int radi
 	//return dist;
 }
 
-
+//Hiperbolikus sik tavolsag
 inline void hyperbolicD(vec3 p, vec3 q) {
 	printf("Tavolsag  %3.05f\n", acoshf(-1 * ((p.x * q.x) + (p.y * q.y) - (p.z * q.z))));
 	//return acoshf(-1 * ((p.x * q.x) + (p.y * q.y) - (p.z * q.z)));
@@ -559,7 +559,7 @@ inline vec3 Rotate(vec3 u, vec4 q) {
 
 //Adott ket egyenes implicit egyenletukkel, szamutsuk ki a metszespont w harmadik homogen koordinatajat
 inline void ketEgyenesImplicit(vec3 e1, vec3 e2) {
-	printf("%3.05f\n", e1.x * e2.y - e1.y * e2.x);
+	printf("w: %3.05f\n", e1.x * e2.y - e1.y * e2.x);
 }
 
 
@@ -567,15 +567,6 @@ inline void ketEgyenesImplicit(vec3 e1, vec3 e2) {
 //Derivalni kell 1 fele keppen
 
 
-//Egy szakasz ket vegpontja homogen koordinatakban
-//szakaszt meg sikot bebaszni geogebraba https://www.geogebra.org/3d
-inline void szakaszketvegpont(vec4 p1, vec4 p2) {
-	vec3 ujp1, ujp2;
-	ujp1 = vec3(p1.x / p1.w, p1.y / p1.w, p1.z / p1.w);
-	ujp2 = vec3(p2.x / p2.w, p2.y / p2.w, p2.z / p2.w);
-	vec3 res = ujp2 - ujp1;
-	printf("X: %3.05f Y: %3.05f Z: %3.05f\n", res.x, res.y, res.z);
-}
 
 //4. kviz//
 inline void camera2d(vec2 kozeppont, float szelesseg, float magassag, vec2 pont) {
@@ -601,6 +592,16 @@ inline void atlokszama(int n) {
 	printf("%3.05f\n", (n * (n - 3)) / 2);
 }
 
+//Egy szakasz ket vegpontja homogen koordinatakba 
+//Mi lesz a szakasz es az Descartes koordokban x=1 egyenletu sik metszespontjanak y Descartes koordja?
+//szakaszt meg sikot bebaszni geogebraba https://www.geogebra.org/3d
+inline void szakaszketvegpont(vec4 p1, vec4 p2, int x) {
+	vec3 ujp1, ujp2;
+	ujp1 = vec3(p1.x / p1.w, p1.y / p1.w, p1.z / p1.w);
+	ujp2 = vec3(p2.x / p2.w, p2.y / p2.w, p2.z / p2.w);
+	vec3 res = ujp2 - ujp1;
+	printf("X: %3.05f Y: %3.05f Z: %3.05f\n", res.x, res.y, res.z);
+}
 
 
 //5. kviz
@@ -672,7 +673,7 @@ inline void haromszogMVP(vec3 m1, vec2 t1, vec3 m2, vec2 t2, vec3 m3, vec2 t3) {
 	//xpix = 1000 * ( u / (-0.5u - 0.5v + 1) + 1) / 2 + cx
 	//ypix = 1000 * ( v / (-0.5u - 0.5v + 1) + 1) / 2 + cy
 	//Ezt a fenti 2-t kell egyszeruseteni
-}
+}	//https://www.symbolab.com/solver/step-by-step/%5Cbegin%7Bpmatrix%7Du%26v%260.5u%2B0.5v-1%261%5Cend%7Bpmatrix%7D%5Ccdot%5Cbegin%7Bpmatrix%7D1%260%260%260%5C%5C%20%20%200%261%260%260%5C%5C%20%20%200%260%261%26-1%5C%5C%20%20%200%260%261%260%5Cend%7Bpmatrix%7D%20
 
 //7. kviz//
 inline float F(float n, float k) {
@@ -791,8 +792,25 @@ rslt = [r(1), r(2), r(3), 0;
 //FPS jatek, FRENET
 inline void FPS(vec3 pos, vec3 seb, vec3 gyors) {
 	vec3 w, v, u;
-	w = seb * (-1.0);
-	v = gyors;
-	u = dot(v, w);
-	printf("%3.05f %3.05f %3.05f %d\n", pos.x, pos.y, pos.z, 1);
+	w = normalize(seb * (-1.0));
+	v = normalize(gyors);
+	u = cross(normalize(v), normalize(w));
+	printf("Kamera View transz:\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 0\n %3.05f %3.05f %3.05f 1\n",
+		u.x, v.x, w.x, 0,
+		u.y, v.y, w.y, 0,
+		u.z, v.z, w.z, 0,
+		pos.x, pos.y, pos.z, 1);
+}
+
+//xy síkra billboard referencia
+inline void billBoard(vec3 eye, vec3 pos, vec3 up) {
+	vec3 w = eye - pos;
+	vec3 r = normalize(cross(up, w));
+	printf("%3.05f %3.05f %3.05f 0\n", r.x, r.y, r.z);
+
+	vec3 u = normalize(cross(w, r));
+	printf("%3.05f %3.05f %3.05f 0\n", u.x, u.y, u.z);
+
+	printf("0 0 1 0\n");
+	printf("%3.05f %3.05f %3.05f 0\n", pos.x, pos.y, pos.z);
 }
