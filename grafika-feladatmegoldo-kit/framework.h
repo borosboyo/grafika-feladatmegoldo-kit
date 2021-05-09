@@ -844,3 +844,23 @@ inline void jatekObjRef(vec3 seb, vec3 gyors, float tRad) {
 	printf("%3.05f %3.05f %3.05f 0\n", sor3.x, sor3.y, sor3.z);
 	printf("%3.05f %3.05f %3.05f 1\n", pos.x,  pos.y,  pos.z);
 }
+
+//Kvadratikus felulet matrixa
+//sugarkovetes, normalvektorok aranya, ahol a sugar eloszor metszi a kvadratikus feluletet
+
+//https://www.symbolab.com/solver/equation-calculator/ ide kell bemasolgatni a dolgokat
+/*
+eye = s = (0,0,0)
+d = r
+*/
+//Ez kell jelenleg
+//[d, 0] * Q * [d, 0]^T * t^2 + 2 * [s,1] * Q * [d,0]^T * t + [s,1] * Q * [s,1]^T = 0
+//ezt ki lehet masolni:
+//\begin{pmatrix}1&1&1&0\end{pmatrix}\cdot \begin{pmatrix}0&0&0&1\\ 0&0&0&1\\ 0&0&0&1\\ 1&1&1&-2\end{pmatrix}\cdot \begin{pmatrix}1\\ 1\\ 1\\ 0\end{pmatrix}\cdot t^2\:+2\cdot \begin{pmatrix}0&0&0&1\end{pmatrix}\cdot \begin{pmatrix}0&0&0&1\\ \:0&0&0&1\\ \:0&0&0&1\\ \:1&1&1&-2\end{pmatrix}\cdot \begin{pmatrix}1\\ 1\\ 1\\ 0\end{pmatrix}\cdot t\:+\begin{pmatrix}0&0&0&1\end{pmatrix}\cdot \begin{pmatrix}0&0&0&1\\ \:\:0&0&0&1\\ \:\:0&0&0&1\\ \:\:1&1&1&-2\end{pmatrix}\cdot \begin{pmatrix}0\\ 0\\ 0\\ 1\end{pmatrix}\:=\:0
+//ebbol meglesz t
+//ezt beirni s + d*tbe meglesz r*
+//ezutan 
+//Normálvektor:
+//N = Q * [r*, 1] ^ T elso harom koordinataja
+//\begin{pmatrix}0&0&0&1\\ \:\:\:0&0&0&1\\ \:\:\:0&0&0&1\\ \:\:\:1&1&1&-2\end{pmatrix}\cdot \begin{pmatrix}\frac{2}{6}\\ \:\:\frac{2}{6}\\ \:\:\frac{2}{6}\\ \:\:1\end{pmatrix}
+

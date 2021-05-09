@@ -130,12 +130,12 @@ int main() {
 
     //
     FPS(vec3(0, 0, 0), vec3(6, 8, 0), vec3(12, -9, 0));
+
+    //
+    jatekObjRef(vec3(-0.707, 0.707, 1),vec3(-0.707, -0.707, 0), M_PI / 4);
     */
 
     vec3 tmp3;
     vec4 tmp4;
-
-   
-    jatekObjRef(vec3(-0.707, 0.707, 1),vec3(-0.707, -0.707, 0), M_PI / 4);
 
 }
