@@ -675,6 +675,20 @@ inline void haromszogMVP(vec3 m1, vec2 t1, vec3 m2, vec2 t2, vec3 m3, vec2 t3) {
 	//Ezt a fenti 2-t kell egyszeruseteni
 }	//https://www.symbolab.com/solver/step-by-step/%5Cbegin%7Bpmatrix%7Du%26v%260.5u%2B0.5v-1%261%5Cend%7Bpmatrix%7D%5Ccdot%5Cbegin%7Bpmatrix%7D1%260%260%260%5C%5C%20%20%200%261%260%260%5C%5C%20%20%200%260%261%26-1%5C%5C%20%20%200%260%261%260%5Cend%7Bpmatrix%7D%20
 
+
+//haromszog csucsa hol metszi a 0,0,0 kezdopontu 1,0,0 iranyvektoru sugar a haromszog sikjat
+inline void haromszogSikMetszes(vec3 cs1, vec3 cs2, vec3 cs3, vec3 kezdo, vec3 irany) {
+	vec3 o1, o2;
+	o1 = cs2 - cs1;
+	o2 = cs3 - cs1;
+	vec3 n = cross(o1, o2);
+	vec3 P = cs1;
+	vec3 distance = dot(P - kezdo, n) / dot(irany, n);
+	vec3 result = kezdo + irany * distance;
+	printf("%3.05f %3.05f %3.05f\n", result.x, result.y, result.z);
+}
+
+
 //7. kviz//
 inline float F(float n, float k) {
 	printf("Szazalekban: %3.05f", ((n - 1) * (n - 1) + k * k) / ((n + 1) * (n + 1) + k * k) * 100);
@@ -714,10 +728,6 @@ inline float fenysugarKozegbol(float n) {
 	printf("Fok: %3.05f\n", toDeg(asinf(n)));
 	return toDeg(asinf(n));
 }
-
-//
-
-
 
 
 //9. kviz
@@ -863,4 +873,6 @@ d = r
 //Normálvektor:
 //N = Q * [r*, 1] ^ T elso harom koordinataja
 //\begin{pmatrix}0&0&0&1\\ \:\:\:0&0&0&1\\ \:\:\:0&0&0&1\\ \:\:\:1&1&1&-2\end{pmatrix}\cdot \begin{pmatrix}\frac{2}{6}\\ \:\:\frac{2}{6}\\ \:\:\frac{2}{6}\\ \:\:1\end{pmatrix}
+
+
 

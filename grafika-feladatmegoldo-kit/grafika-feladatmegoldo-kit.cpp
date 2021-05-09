@@ -137,5 +137,6 @@ int main() {
 
     vec3 tmp3;
     vec4 tmp4;
+    haromszogSikMetszes(vec3(2, 8, 1), vec3(2, 2, 9), vec3(2, 7, 3), vec3(0, 0, 0), vec3(1, 0, 0));
 
 }
